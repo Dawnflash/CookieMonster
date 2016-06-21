@@ -18,6 +18,11 @@ CM.Disp = {};
 
 CM.Sim = {};
 
+CM.Util = {};
+
+CM.AUTOCLICK_ON = true;
+CM.AUTOCLICK_ID;
+
 /*********
  * Cache *
  *********/
@@ -921,9 +926,14 @@ CM.Disp.UpdateTimerBar = function() {
 			l('CMTimerBarCFBar').style.width = Math.round(Game.clickFrenzy * maxWidth / Game.clickFrenzyMax) + 'px';
 			l('CMTimerBarCFTime').textContent = Math.ceil(Game.clickFrenzy / Game.fps);
 			count++;
+
+			//AutoClick
+			CM.Util.AutoClickOn(1000);
 		}
 		else {
 			CM.Disp.TimerBarCF.style.display = 'none';
+			//AutoClick
+			CM.Util.AutoClickOff();
 		}
 		
 		if (count != 0) {
@@ -2991,6 +3001,29 @@ CM.Sim.ResetBonus = function(possiblePresMax) {
 	}
 
 	return (CM.Sim.cookiesPs - curCPS);
+}
+
+/*********
+ * Util *
+ *********/
+
+CM.Util.AutoClickOn = function(perSecond = 0) {
+	var rate;
+	if (perSecond <= 0)
+		rate = 0;
+	else
+		rate = 1000/perSecond;
+	CM.AUTOCLICK_ID = setInterval(function() {
+		l('bigCookie').click();
+	}, rate);
+	CM.AUTOCLICK_ON = true;
+}
+
+CM.Util.AutoClickOff = function() {
+	if (CM.AUTOCLICK_ON) {
+		clearInterval(CM.AUTOCLICK_ID);
+		CM.AUTOCLICK_ON = false;
+	}
 }
 
 /**********

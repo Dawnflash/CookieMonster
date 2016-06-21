@@ -20,7 +20,7 @@ CM.Sim = {};
 
 CM.Util = {};
 
-CM.AUTOCLICK_ON = true;
+CM.AUTOCLICK_ON = false;
 CM.AUTOCLICK_ID;
 
 /*********

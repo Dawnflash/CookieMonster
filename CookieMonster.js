@@ -3008,15 +3008,17 @@ CM.Sim.ResetBonus = function(possiblePresMax) {
  *********/
 
 CM.Util.AutoClickOn = function(perSecond = 0) {
-	var rate;
-	if (perSecond <= 0)
-		rate = 0;
-	else
-		rate = 1000/perSecond;
-	CM.AUTOCLICK_ID = setInterval(function() {
-		l('bigCookie').click();
-	}, rate);
-	CM.AUTOCLICK_ON = true;
+	if (!CM.AUTOCLICK_ON) {
+		var rate;
+		if (perSecond <= 0)
+			rate = 0;
+		else
+			rate = 1000/perSecond;
+		CM.AUTOCLICK_ID = setInterval(function() {
+			l('bigCookie').click();
+		}, rate);
+		CM.AUTOCLICK_ON = true;
+	}
 }
 
 CM.Util.AutoClickOff = function() {

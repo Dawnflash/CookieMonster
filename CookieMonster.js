@@ -3018,6 +3018,7 @@ CM.Util.AutoClickOn = function(perSecond = 0) {
 			l('bigCookie').click();
 		}, rate);
 		CM.AUTOCLICK_ON = true;
+		console.log('Enabling autoclick!');
 	}
 }
 
@@ -3025,6 +3026,7 @@ CM.Util.AutoClickOff = function() {
 	if (CM.AUTOCLICK_ON) {
 		clearInterval(CM.AUTOCLICK_ID);
 		CM.AUTOCLICK_ON = false;
+		console.log('Disabling autoclick!');
 	}
 }
 

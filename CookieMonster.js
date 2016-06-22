@@ -887,7 +887,9 @@ CM.Disp.UpdateTimerBar = function() {
 			CM.Disp.TimerBarRen.style.display = 'none';
 		}
 		
+		var hasFrenzy = false;
 		if (Game.frenzy > 0) {
+			hasFrenzy = true;
 			CM.Disp.TimerBarFren.style.display = '';
 			if (Game.frenzyPower == 7) {
 				l('CMTimerBarFrenType').textContent = 'Frenzy';
@@ -909,13 +911,14 @@ CM.Disp.UpdateTimerBar = function() {
 			l('CMTimerBarFrenTime').textContent = Math.ceil(Game.frenzy / Game.fps);
 			count++;
 			//AutoClick good time!
-			CM.Util.AutoClickOn(500);
+			CM.Util.AutoClickOn(50);
 		}
 		else {
 			CM.Disp.TimerBarFren.style.display = 'none';
 		}
 		
 		if (Game.clickFrenzy > 0) {
+			hasFrenzy = true;
 			CM.Disp.TimerBarCF.style.display = '';
 			if (Game.clickFrenzyPower == 777) {
 				l('CMTimerBarCFType').textContent = 'Click Frenzy';
@@ -943,7 +946,7 @@ CM.Disp.UpdateTimerBar = function() {
 			CM.Disp.TimerBarFren.style.height = height + 'px';
 			CM.Disp.TimerBarCF.style.height = height + 'px';
 		}
-		else {
+		if (!hasFrenzy) {
 			//AutoClick shouldn't be on unless frenzy was on
 			CM.Util.AutoClickOff();
 		}

@@ -3035,7 +3035,7 @@ CM.Util.AutoClickOn = function(perSecond = 0) {
 
 CM.Util.AutoClickOff = function() {
 	if (CM.Cache.AUTOCLICK_ON) {
-		clearInterval(CM.AUTOCLICK_ID);
+		clearInterval(CM.Cache.AUTOCLICK_ID);
 		CM.Cache.AUTOCLICK_ON = false;
 	}
 }

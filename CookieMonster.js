@@ -3043,7 +3043,7 @@ CM.Util.AutoClickOff = function() {
 }
 
 CM.Util.AutoCollect = function() {
-	if (CM.Cache.AUTOCOLLECT) {
+	if (CM.Cache.AUTOCOLLECT_ON) {
 		CM.Cache.AUTOCOLLECT_ID = setInterval(function() {
 			if (CM.Cache.AUTOCOLLECT_WRINKLERS)
 				Game.CollectWrinklers; //wrinklers

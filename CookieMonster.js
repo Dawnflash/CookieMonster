@@ -2448,8 +2448,6 @@ CM.Loop = function() {
 	
 	// Update Average CPS (might need to move)
 	CM.Cache.UpdateAvgCPS();
-
-	CM.Util.AutoCollect();
 }
 
 CM.Init = function() {
@@ -3042,8 +3040,9 @@ CM.Util.AutoClickOff = function() {
 	}
 }
 
-CM.Util.AutoCollect = function() {
-	if (CM.Cache.AUTOCOLLECT_ON) {
+CM.Util.ToggleAutoCollect = function() {
+	if (!CM.Cache.AUTOCOLLECT_ON) {
+		CM.Cache.AUTOCOLLECT_ON = true;
 		CM.Cache.AUTOCOLLECT_ID = setInterval(function() {
 			if (CM.Cache.AUTOCOLLECT_WRINKLERS)
 				Game.CollectWrinklers; //wrinklers
@@ -3055,7 +3054,9 @@ CM.Util.AutoCollect = function() {
 		}, 2000);
 	} else {
 		clearInterval(CM.Cache.AUTOCOLLECT_ID);
+		CM.Cache.AUTOCOLLECT_ON = false;
 	}
+	return 0;
 }
 
 /**********

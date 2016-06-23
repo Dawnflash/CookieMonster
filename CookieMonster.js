@@ -20,8 +20,15 @@ CM.Sim = {};
 
 CM.Util = {};
 
-CM.AUTOCLICK_ON = false;
-CM.AUTOCLICK_ID;
+CM.Config = {};
+
+CM.Config.AUTOCLICK_ON = false;
+CM.Config.AUTOCLICK_ID;
+CM.Config.AUTOCOLLECT_ON = false;
+CM.Config.AUTOCOLLECT_ID;
+CM.Config.AUTOCOLLECT_WRINKLERS = true;
+CM.Config.AUTOCOLLECT_SEASONALS = true;
+CM.Config.AUTOCOLLECT_GCS = true;
 
 /*********
  * Cache *
@@ -2442,7 +2449,9 @@ CM.Loop = function() {
 	CM.Disp.CheckGoldenCookie();
 	
 	// Update Average CPS (might need to move)
-	CM.Cache.UpdateAvgCPS()
+	CM.Cache.UpdateAvgCPS();
+
+	CM.Util.AutoCollect();
 }
 
 CM.Init = function() {
@@ -3022,16 +3031,32 @@ CM.Util.AutoClickOn = function(perSecond = 0) {
 		rate = 0;
 	else
 		rate = 1000/perSecond;
-	CM.AUTOCLICK_ID = setInterval(function() {
+	CM.Config.AUTOCLICK_ID = setInterval(function() {
 		l('bigCookie').click();
 	}, rate);
-	CM.AUTOCLICK_ON = true;
+	CM.Config.AUTOCLICK_ON = true;
 }
 
 CM.Util.AutoClickOff = function() {
-	if (CM.AUTOCLICK_ON) {
+	if (CM.Config.AUTOCLICK_ON) {
 		clearInterval(CM.AUTOCLICK_ID);
-		CM.AUTOCLICK_ON = false;
+		CM.Config.AUTOCLICK_ON = false;
+	}
+}
+
+CM.Util.AutoCollect = function() {
+	if (CM.Config.AUTOCOLLECT) {
+		CM.Config.AUTOCOLLECT_ID = setInterval(function() {
+			if (CM.Config.AUTOCOLLECT_WRINKLERS)
+				Game.CollectWrinklers; //wrinklers
+			if (CM.Config.AUTOCOLLECT_SEASONALS)
+				if (Game.seasonPopup.life > 0)
+					Game.seasonPopup.click();
+			if (CM.Config.AUTOCOLLECT_GCS)
+				Game.goldenCookie.click();
+		}, 2000);
+	} else {
+		clearInterval(CM.Config.AUTOCOLLECT_ID);
 	}
 }
 

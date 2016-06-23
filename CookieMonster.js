@@ -3045,7 +3045,10 @@ CM.Util.ToggleAutoCollect = function() {
 		CM.Cache.AUTOCOLLECT_ON = true;
 		CM.Cache.AUTOCOLLECT_ID = setInterval(function() {
 			if (CM.Cache.AUTOCOLLECT_WRINKLERS)
-				Game.CollectWrinklers();
+				Game.wrinklers.forEach(function(wrinkler) {
+					if (wrinkler.phase == 2)
+						wrinkler.hp = 0;
+				});
 			if (CM.Cache.AUTOCOLLECT_SEASONALS)
 				if (Game.seasonPopup.life > 0)
 					Game.seasonPopup.click();

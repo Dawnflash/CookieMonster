@@ -351,11 +351,13 @@ CM.Cache.AvgClicks = -1;
 
 CM.Cache.AUTOCLICK_ON = false;
 CM.Cache.AUTOCLICK_ID;
+
 CM.Cache.AUTOCOLLECT_ON = false;
-CM.Cache.AUTOCOLLECT_ID;
 CM.Cache.AUTOCOLLECT_WRINKLERS = true;
 CM.Cache.AUTOCOLLECT_SEASONALS = true;
 CM.Cache.AUTOCOLLECT_GCS = true;
+
+CM.Cache.AUTOPLEDGE_ON = false;
 
 /**********
  * Config *
@@ -2441,6 +2443,9 @@ CM.Loop = function() {
 
 		// Change menu refresh interval
 		CM.Disp.RefreshMenu();
+
+		// Use automatic tools if enabled
+		CM.Util.AutoTools();
 	}
 	
 	// Check Golden Cookies
@@ -2448,6 +2453,7 @@ CM.Loop = function() {
 	
 	// Update Average CPS (might need to move)
 	CM.Cache.UpdateAvgCPS();
+
 }
 
 CM.Init = function() {
@@ -3019,6 +3025,15 @@ CM.Sim.ResetBonus = function(possiblePresMax) {
  * Util *
  *********/
 
+ CM.Util.AutoTools = function() {
+ 	if (CM.Cache.AUTOCOLLECT_ON) {
+ 		CM.Util.Collect();
+ 	}
+ 	if (CM.Cache.AUTOPLEDGE_ON) {
+ 		CM.Util.Pledge();
+ 	}
+ }
+
 CM.Util.AutoClickOn = function(perSecond = 0) {
 	CM.Util.AutoClickOff(); //First shut off the previous AC
 
@@ -3040,30 +3055,37 @@ CM.Util.AutoClickOff = function() {
 	}
 }
 
-CM.Util.ToggleAutoCollect = function() {
-	if (!CM.Cache.AUTOCOLLECT_ON) {
-		CM.Cache.AUTOCOLLECT_ON = true;
-		CM.Cache.AUTOCOLLECT_ID = setInterval(function() {
-			if (CM.Cache.AUTOCOLLECT_WRINKLERS) {
-				Game.wrinklers.forEach(function(wrinkler) {
-					if (wrinkler.phase == 2)
-						wrinkler.hp = 0;
-				});
-			}
-			if (CM.Cache.AUTOCOLLECT_SEASONALS) {
-				if (Game.seasonPopup.life > 0) {
-					Game.seasonPopup.click();
-				}
-			}
-			if (CM.Cache.AUTOCOLLECT_GCS) {
-				Game.goldenCookie.click();
-			}
-		}, 2000);
-	} else {
-		clearInterval(CM.Cache.AUTOCOLLECT_ID);
-		CM.Cache.AUTOCOLLECT_ON = false;
+CM.Util.Collect = function() {
+	if (CM.Cache.AUTOCOLLECT_WRINKLERS) {
+		Game.wrinklers.forEach(function(wrinkler) {
+			if (wrinkler.phase == 2)
+				wrinkler.hp = 0;
+		});
 	}
-	return 0;
+	if (CM.Cache.AUTOCOLLECT_SEASONALS) {
+		if (Game.seasonPopup.life > 0) {
+			Game.seasonPopup.click();
+		}
+	}
+	if (CM.Cache.AUTOCOLLECT_GCS) {
+		Game.goldenCookie.click();
+	}
+}
+
+CM.Util.Pledge = function() {
+	if (Game.pledgeT == 0) {
+		Game.UpgradesById[74].buy();
+	}
+}
+
+CM.Util.ToggleAutoCollect = function() {
+	CM.Cache.AUTOCOLLECT_ON = !CM.Cache.AUTOCOLLECT_ON;
+	return CM.Cache.AUTOCOLLECT_ON;
+}
+
+CM.Util.ToggleAutoPledge = function() {
+	CM.Cache.AUTOPLEDGE_ON = !CM.Cache.AUTOPLEDGE_ON;
+	return CM.Cache.AUTOPLEDGE_ON;
 }
 
 /**********

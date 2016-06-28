@@ -943,7 +943,7 @@ CM.Disp.UpdateTimerBar = function() {
 			count++;
 
 			//AutoClick big time!
-			CM.Util.AutoClickOn(2000, true);
+			CM.Util.AutoClickOn(2000, true, true);
 		}
 		else {
 			CM.Disp.TimerBarCF.style.display = 'none';

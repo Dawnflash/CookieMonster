@@ -958,7 +958,7 @@ CM.Disp.UpdateTimerBar = function() {
 		}
 		if (!hasFrenzy) {
 			//AutoClick shouldn't be on unless frenzy was on
-			CM.Util.AutoClickOff();
+			CM.Util.AutoClickOff(true);
 		}
 	}
 }
@@ -3058,11 +3058,11 @@ CM.Util.AutoClickOn = function(perSecond = 0, goldenSwitch = false) {
 	}
 }
 
-CM.Util.AutoClickOff = function() {
+CM.Util.AutoClickOff = function(goldenSwitch = false) {
 	if (CM.Cache.AUTOCLICK && CM.Cache.AUTOCLICK_ON) {
 		clearInterval(CM.Cache.AUTOCLICK_ID);
 		CM.Cache.AUTOCLICK_ON = false;
-		if (CM.Cache.AUTOCLICK_GS_ON && Game.UpgradesById[332].unlocked) {
+		if (goldenSwitch && CM.Cache.AUTOCLICK_GS_ON && Game.UpgradesById[332].unlocked) {
 			Game.UpgradesById[332].buy();
 			CM.Cache.AUTOCLICK_GS_ON = false;
 		}

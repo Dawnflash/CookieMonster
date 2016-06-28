@@ -3037,9 +3037,11 @@ CM.Sim.ResetBonus = function(possiblePresMax) {
  	}
  }
 
-CM.Util.AutoClickOn = function(perSecond = 0, goldenSwitch = false) {
-	if (CM.Cache.AUTOCLICK) {
+CM.Util.AutoClickOn = function(perSecond = 0, goldenSwitch = false, override = false) {
+	if (override) {
 		CM.Util.AutoClickOff(); //First shut off the previous AC
+	}
+	if (CM.Cache.AUTOCLICK && !CM.Cache.AUTOCLICK_ON) {
 
 		if (goldenSwitch && CM.Cache.AUTOCLICK_GS && !Game.UpgradesById[331].bought && Game.UpgradesById[331].unlocked) { //AutoGS
 			Game.UpgradesById[331].buy();

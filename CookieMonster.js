@@ -3092,6 +3092,11 @@ CM.Util.Pledge = function() {
 	}
 }
 
+CM.Util.ToggleAutoClicker = function() {
+	CM.Cache.AUTOCLICK = !CM.Cache.AUTOCLICK;
+	return CM.Cache.AUTOCLICK;
+}
+
 CM.Util.ToggleAutoCollect = function() {
 	CM.Cache.AUTOCOLLECT = !CM.Cache.AUTOCOLLECT;
 	return CM.Cache.AUTOCOLLECT;

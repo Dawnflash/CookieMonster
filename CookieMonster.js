@@ -943,7 +943,7 @@ CM.Disp.UpdateTimerBar = function() {
 			count++;
 
 			//AutoClick big time!
-			CM.Util.AutoClickOn(2000, true, true);
+			CM.Util.AutoClickOn(2000, true);
 		}
 		else {
 			CM.Disp.TimerBarCF.style.display = 'none';
@@ -3037,10 +3037,9 @@ CM.Sim.ResetBonus = function(possiblePresMax) {
  	}
  }
 
-CM.Util.AutoClickOn = function(perSecond = 0, goldenSwitch = false, override = false) {
-	if (override) {
-		CM.Util.AutoClickOff(); //First shut off the previous AC
-	}
+CM.Util.AutoClickOn = function(perSecond = 0, goldenSwitch = false) {
+	CM.Util.AutoClickOff(); //First shut off the previous AC
+	
 	if (CM.Cache.AUTOCLICK && !CM.Cache.AUTOCLICK_ON) {
 
 		if (goldenSwitch && CM.Cache.AUTOCLICK_GS && !Game.UpgradesById[331].bought && Game.UpgradesById[331].unlocked) { //AutoGS

@@ -3053,42 +3053,46 @@ CM.Util.AutoClickOn = function(perSecond = 0, goldenSwitch = false) {
 		else
 			rate = 1000/perSecond;
 		CM.Cache.AUTOCLICK_ID = setInterval(function() {
-			l('bigCookie').click();
+			if (!Game.OnAscend && !Game.AscendTimer) {
+				Game.ClickCookie()
+			}
 		}, rate);
 		CM.Cache.AUTOCLICK_ON = true;
 	}
 }
 
 CM.Util.AutoClickOff = function(goldenSwitch = false) {
+	if (goldenSwitch && CM.Cache.AUTOCLICK_GS_ON && Game.UpgradesById[332].unlocked) {
+		Game.UpgradesById[332].buy();
+		CM.Cache.AUTOCLICK_GS_ON = false;
+	}
 	if (CM.Cache.AUTOCLICK && CM.Cache.AUTOCLICK_ON) {
 		clearInterval(CM.Cache.AUTOCLICK_ID);
 		CM.Cache.AUTOCLICK_ON = false;
-		if (goldenSwitch && CM.Cache.AUTOCLICK_GS_ON && Game.UpgradesById[332].unlocked) {
-			Game.UpgradesById[332].buy();
-			CM.Cache.AUTOCLICK_GS_ON = false;
-		}
 	}
 }
 
 CM.Util.Collect = function() {
-	if (CM.Cache.AUTOCOLLECT_WRINKLERS) {
-		Game.wrinklers.forEach(function(wrinkler) {
-			if (wrinkler.phase == 2)
-				wrinkler.hp = 0;
-		});
-	}
-	if (CM.Cache.AUTOCOLLECT_SEASONALS) {
-		if (Game.seasonPopup.life > 0) {
-			Game.seasonPopup.click();
+	if (!Game.OnAscend && !Game.AscendTimer) {
+		if (CM.Cache.AUTOCOLLECT_WRINKLERS) {
+			Game.wrinklers.forEach(function(wrinkler) {
+				if (wrinkler.phase == 2)
+					wrinkler.hp = 0;
+			});
 		}
-	}
-	if (CM.Cache.AUTOCOLLECT_GCS) {
-		Game.goldenCookie.click();
+		if (CM.Cache.AUTOCOLLECT_SEASONALS) {
+			if (Game.seasonPopup.life > 0) {
+				Game.seasonPopup.click();
+			}
+		}
+		if (CM.Cache.AUTOCOLLECT_GCS) {
+			Game.goldenCookie.click();
+		}
 	}
 }
 
 CM.Util.Pledge = function() {
-	if (Game.pledgeT == 0) {
+	if (Game.pledgeT == 0 && !Game.OnAscend && !Game.AscendTimer && Game.UpgradesById[74].unlocked) {
 		Game.UpgradesById[74].buy();
 	}
 }

@@ -3169,12 +3169,16 @@ CM.Util.Collect = function() {
 			});
 		}
 		if (CM.Cache.AUTOCOLLECT_SEASONALS) {
-			if (Game.seasonPopup.life > 0) {
-				Game.seasonPopup.click();
-			}
+			Game.shimmers.forEach(function(shimmer) {
+				if (shimmer.type == "reindeer")
+					shimmer.pop();
+			});
 		}
 		if (CM.Cache.AUTOCOLLECT_GCS) {
-			Game.goldenCookie.click();
+			Game.shimmers.forEach(function(shimmer) {
+				if (shimmer.type == "golden")
+					shimmer.pop();
+			});
 		}
 	}
 }

@@ -351,7 +351,7 @@ CM.Cache.AvgClicks = -1;
 CM.Cache.AUTOCLICK = true;
 CM.Cache.AUTOCLICK_ON = false;
 CM.Cache.AUTOCLICK_ID;
-CM.Cache.AUTOCLICK_GS = true;
+CM.Cache.AUTOCLICK_GS = false;
 CM.Cache.AUTOCLICK_GS_ON = false;
 CM.Cache.AUTOCLICK_RATE = 100;
 
@@ -3125,10 +3125,15 @@ CM.Sim.ResetBonus = function(possiblePresMax) {
  	if (CM.Cache.AUTOPLEDGE) {
  		CM.Util.Pledge();
  	}
- 	if (Object.keys(Game.buffs).length > 0 && !CM.Cache.AT_AUTOCLICK) {
- 		CM.Util.AutoClickOn(CM.Cache.AUTOCLICK_RATE);
- 		CM.Cache.AT_AUTOCLICK = true;
- 	} else if (CM.Cache.AT_AUTOCLICK) CM.Util.AutoClickOff();
+ 	if (Object.keys(Game.buffs).length > 0) {
+ 		if (!CM.Cache.AT_AUTOCLICK) {
+ 			CM.Util.AutoClickOn(CM.Cache.AUTOCLICK_RATE);
+ 			CM.Cache.AT_AUTOCLICK = true;
+ 		}
+ 	} else if (CM.Cache.AT_AUTOCLICK) {
+ 		CM.Util.AutoClickOff();
+ 		CM.Cache.AT_AUTOCLICK = false;
+ 	}
  }
 
 CM.Util.AutoClickOn = function(perSecond = 0) {

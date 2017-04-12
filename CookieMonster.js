@@ -353,6 +353,7 @@ CM.Cache.AUTOCLICK_ON = false;
 CM.Cache.AUTOCLICK_ID;
 CM.Cache.AUTOCLICK_GS = true;
 CM.Cache.AUTOCLICK_GS_ON = false;
+CM.Cache.AUTOCLICK_RATE = 100;
 
 CM.Cache.AUTOCOLLECT = false;
 CM.Cache.AUTOCOLLECT_WRINKLERS = true;
@@ -3123,14 +3124,17 @@ CM.Sim.ResetBonus = function(possiblePresMax) {
  	if (CM.Cache.AUTOPLEDGE) {
  		CM.Util.Pledge();
  	}
+ 	if (Game.buffs.length > 0) {
+ 		CM.Util.AutoClickOn(CM.Cache.AUTOCLICK_RATE);
+ 	} else CM.Util.AutoClickOff();
  }
 
-CM.Util.AutoClickOn = function(perSecond = 0, goldenSwitch = false) {
+CM.Util.AutoClickOn = function(perSecond = 0) {
 	CM.Util.AutoClickOff(); //First shut off the previous AC
 	
 	if (CM.Cache.AUTOCLICK && !CM.Cache.AUTOCLICK_ON) {
 
-		if (goldenSwitch && CM.Cache.AUTOCLICK_GS && !Game.UpgradesById[331].bought && Game.UpgradesById[331].unlocked) { //AutoGS
+		if (CM.Cache.AUTOCLICK_GS && !Game.UpgradesById[331].bought && Game.UpgradesById[331].unlocked) { //AutoGS
 			Game.UpgradesById[331].buy();
 			CM.Cache.AUTOCLICK_GS_ON = true;
 		}
@@ -3149,12 +3153,12 @@ CM.Util.AutoClickOn = function(perSecond = 0, goldenSwitch = false) {
 	}
 }
 
-CM.Util.AutoClickOff = function(goldenSwitch = false) {
-	if (goldenSwitch && CM.Cache.AUTOCLICK_GS_ON && Game.UpgradesById[332].unlocked) {
+CM.Util.AutoClickOff = function() {
+	if (CM.Cache.AUTOCLICK_GS_ON && Game.UpgradesById[332].unlocked) {
 		Game.UpgradesById[332].buy();
 		CM.Cache.AUTOCLICK_GS_ON = false;
 	}
-	if (CM.Cache.AUTOCLICK && CM.Cache.AUTOCLICK_ON) {
+	if (CM.Cache.AUTOCLICK_ON) {
 		clearInterval(CM.Cache.AUTOCLICK_ID);
 		CM.Cache.AUTOCLICK_ON = false;
 	}

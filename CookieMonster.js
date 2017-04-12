@@ -3125,7 +3125,9 @@ CM.Sim.ResetBonus = function(possiblePresMax) {
  	if (CM.Cache.AUTOPLEDGE) {
  		CM.Util.Pledge();
  	}
- 	if (Object.keys(Game.buffs).length > 0) {
+ 	var buffOn = false;
+ 	Object.values(Game.buffs).forEach(function(e) {if (e != 0) {buffOn = true; return;}});
+ 	if (buffOn) {
  		if (!CM.Cache.AT_AUTOCLICK) {
  			CM.Util.AutoClickOn(CM.Cache.AUTOCLICK_RATE);
  			CM.Cache.AT_AUTOCLICK = true;

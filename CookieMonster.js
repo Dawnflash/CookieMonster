@@ -359,6 +359,7 @@ CM.Cache.AUTOCOLLECT = false;
 CM.Cache.AUTOCOLLECT_WRINKLERS = true;
 CM.Cache.AUTOCOLLECT_SEASONALS = true;
 CM.Cache.AUTOCOLLECT_GCS = true;
+CM.Cache.AT_AUTOCLICK = false;
 
 CM.Cache.AUTOPLEDGE = false;
 
@@ -3124,9 +3125,9 @@ CM.Sim.ResetBonus = function(possiblePresMax) {
  	if (CM.Cache.AUTOPLEDGE) {
  		CM.Util.Pledge();
  	}
- 	if (Object.keys(Game.buffs).length > 0) {
+ 	if (Object.keys(Game.buffs).length > 0 && !CM.Cache.AT_AUTOCLICK) {
  		CM.Util.AutoClickOn(CM.Cache.AUTOCLICK_RATE);
- 	} else CM.Util.AutoClickOff();
+ 	} else if (CM.Cache.AT_AUTOCLICK) CM.Util.AutoClickOff();
  }
 
 CM.Util.AutoClickOn = function(perSecond = 0) {
